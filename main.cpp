@@ -1,12 +1,12 @@
 /* 
 =======================================================
 PICO Serial-USB to Stepper PED (Pulse Enable Direction)
-Version 1.0
+Version 1.01
 
 PM490
 =======================================================
 
-Code Provided as-is, no warraties whatsoever.
+Code Provided as-is, no warranties whatsoever.
 
 Character Command   Char	Hex
 ===============================
@@ -47,10 +47,21 @@ Hz	        Char    Hex
 2994.01	    #	    23
 2000	    @	    40
 
+=======================================================
+1.00 Initial Release
+1.01 Set definitions to simplify reasignment of Ports
+=======================================================
+
 */
 
 #include <stdio.h>
 #include "pico/stdlib.h"
+
+#define LED_CTRL_GP 19
+#define STEPPER_ENABLE_GP 18
+#define STEPPER_DIRECTION_GP 17
+#define STEPPER_PULSE_GP 16
+
 
 using namespace std;
 
@@ -98,20 +109,20 @@ int main() {
     //IO Inits
 
     // Pulse Port
-    gpio_init(16);
-    gpio_set_dir(16, GPIO_OUT);
+    gpio_init(STEPPER_PULSE_GP);
+    gpio_set_dir(STEPPER_PULSE_GP, GPIO_OUT);
 
     // Direction Port
-    gpio_init(17);
-    gpio_set_dir(17, GPIO_OUT);
+    gpio_init(STEPPER_DIRECTION_GP);
+    gpio_set_dir(STEPPER_DIRECTION_GP, GPIO_OUT);
 
     // Enable Port
-    gpio_init(18);
-    gpio_set_dir(18, GPIO_OUT);
+    gpio_init(STEPPER_ENABLE_GP);
+    gpio_set_dir(STEPPER_ENABLE_GP, GPIO_OUT);
 
     // LED Port
-    gpio_init(19);
-    gpio_set_dir(19, GPIO_OUT);
+    gpio_init(LED_CTRL_GP);
+    gpio_set_dir(LED_CTRL_GP, GPIO_OUT);
 
     // Initialize Serial USB
     stdio_usb_init(); // init usb only
@@ -148,10 +159,10 @@ int main() {
         // **** PROCESSING BLOCK ****
 
         // Post GPIO Outputs
-        gpio_put(16,square_pulse_out);
-        gpio_put(17,stepper_direction);
-        gpio_put(18,stepper_enable);
-        gpio_put(19,led_enable);
+        gpio_put(STEPPER_PULSE_GP,square_pulse_out);
+        gpio_put(STEPPER_DIRECTION_GP,stepper_direction);
+        gpio_put(STEPPER_ENABLE_GP,stepper_enable);
+        gpio_put(LED_CTRL_GP,led_enable);
 
         //  Check for character waiting
         rec_char = getchar_timeout_us(0);
