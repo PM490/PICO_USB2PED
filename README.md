@@ -3,6 +3,8 @@ Code to use Raspberry PICO as interface converter from USB-Serial to Pulse-Enabl
 This is useful in DIY telecine/film scanners controlling the frame movement with an stepper motor.
 Repository includes PDF with information and the file PICO_USB2PED.uf2 to flash/upload to PICO.
 
+![Block Diagram](PICO_USB2PED_Block_Diagram.png)
+
 Follow these steps to flash the PICO:
 1. Download the file PICO_USB2PED.uf2 at the flash folder in the repository.
 2. Press and hold the Bootsel button (button next to the usb connector) then connect the pico to the PC (while holding it pressed). After is connected, let go of the bootsel button.
